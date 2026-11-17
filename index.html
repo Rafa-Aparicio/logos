@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#163557" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Logos Church · Cultos</title>
+<style>
+  :root {
+    --ink: #122641;
+    --ink-soft: #2a4060;
+    --muted: #6a645c;
+    --line: #e4ddd0;
+    --paper: #f3efe4;
+    --card: #fffcf6;
+    --blue: #163557;
+    --blue-mid: #3d6294;
+    --blue-soft: #b4c0e0;
+    --orange: #f15a24;
+    --amber: #ee8d33;
+    --danger: #b42318;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Candara, sans-serif;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--blue) 0%, var(--blue-mid) 42%, var(--amber) 72%, var(--orange) 100%) top / 100% 6px no-repeat,
+      var(--paper);
+    min-height: 100vh;
+  }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 22px 64px; }
+  header.top {
+    display: flex; justify-content: space-between; gap: 24px; align-items: flex-end;
+    border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 22px;
+  }
+  .mark { display: flex; gap: 14px; align-items: center; }
+  .logo {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--paper); object-fit: cover;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--blue-soft);
+  }
+  h1 {
+    font-weight: 700; font-size: 28px; letter-spacing: 0.16em; margin: 0; color: var(--blue);
+  }
+  .slogan { margin: 4px 0 0; color: var(--orange); letter-spacing: 0.04em; font-size: 14px; font-weight: 600; }
+  .where { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  nav { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  nav button, .btn {
+    background: var(--card); border: 1px solid var(--blue); color: var(--blue); padding: 8px 12px; border-radius: 999px;
+  }
+  nav button.on, .btn.solid { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .btn.ghost { border-color: var(--line); color: var(--ink-soft); background: transparent; }
+  .view { display: none; }
+  .view.on { display: block; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--blue); padding: 14px 16px; }
+  .kpi:nth-child(2) { border-top-color: var(--orange); }
+  .kpi:nth-child(3) { border-top-color: var(--amber); }
+  .kpi:nth-child(4) { border-top-color: var(--blue-mid); }
+  .kpi span { display: block; color: var(--muted); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .kpi strong { display: block; margin-top: 6px; font-size: 28px; font-weight: 650; color: var(--blue); }
+  .kpi em { font-style: normal; color: var(--muted); font-size: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 12px; }
+  .panel { background: var(--card); border: 1px solid var(--line); padding: 16px 16px 12px; margin-bottom: 12px; }
+  .panel h2 { margin: 0 0 4px; font-size: 16px; font-weight: 600; }
+  .cap { margin: 0 0 12px; color: var(--muted); font-size: 12px; }
+  svg.chart { width: 100%; height: auto; display: block; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .flag { color: var(--danger); font-size: 12px; }
+  .excecao { color: #9a4d12; font-size: 12px; font-weight: 700; }
+  .pos { color: #1a56c4; font-weight: 700; }
+  .neg { color: var(--danger); font-weight: 700; }
+  .lock { max-width: 440px; display: grid; gap: 8px; }
+  .mov { display: grid; grid-template-columns: 150px 140px 1fr 150px auto; gap: 10px; align-items: end; }
+  .lider-lista { display: grid; gap: 10px; }
+  .contato {
+    display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center;
+    background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--blue); padding: 12px 14px;
+  }
+  .contato a { color: inherit; text-decoration: none; display: block; }
+  .contato a b { display: block; color: var(--blue); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .contato a strong { display: block; font-size: 18px; margin-top: 2px; }
+  .contato a span { color: var(--muted); font-size: 14px; }
+  .contato .acoes { display: flex; gap: 6px; }
+  form.lancar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px 12px; }
+  label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+  input, select { background: #fff; border: 1px solid var(--line); padding: 8px; }
+  label.wide { grid-column: span 2; }
+  .form-actions { grid-column: 1 / -1; display: flex; gap: 8px; align-items: center; }
+  .flow { display: flex; flex-direction: column; gap: 10px; }
+  .flow-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+  .node {
+    border: 1px solid var(--line); border-left: 3px solid var(--orange); background: var(--card); padding: 10px 12px; min-width: 120px;
+  }
+  .node b { display: block; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .node strong { font-size: 20px; font-weight: 650; color: var(--blue); }
+  .arrow { align-self: center; color: var(--orange); letter-spacing: 0.2em; }
+  .timeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .tnode { border-top: 3px solid var(--blue-mid); background: var(--card); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); border-left: 1px solid var(--line); padding: 10px; cursor: pointer; color: inherit; text-align: left; }
+  .tnode.on { outline: 2px solid var(--orange); border-top-color: var(--orange); }
+  .tnode small { color: var(--muted); display: block; }
+  .stage {
+    min-height: 460px;
+    background:
+      linear-gradient(90deg, var(--blue) 0%, var(--blue-mid) 42%, var(--amber) 72%, var(--orange) 100%) top / 100% 8px no-repeat,
+      var(--card);
+    color: var(--ink);
+    padding: 48px 56px; display: flex; flex-direction: column; justify-content: space-between;
+    border: 1px solid var(--line);
+  }
+  .stage .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+  .stage .brand img { width: 56px; height: 56px; border-radius: 50%; }
+  .stage .brand span { letter-spacing: 0.16em; font-weight: 700; color: var(--blue); font-size: 13px; }
+  .stage .eyebrow { letter-spacing: 0.18em; font-size: 12px; color: var(--orange); font-weight: 700; }
+  .stage h2 { font-weight: 650; font-size: 48px; margin: 12px 0; letter-spacing: 0.02em; color: var(--blue); }
+  .stage .big { font-size: 64px; line-height: 1; color: var(--ink); }
+  .stage .sub { color: var(--ink-soft); font-size: 18px; }
+  .slide-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; color: var(--muted); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .sw { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+  @media (max-width: 900px) {
+    .kpis, .grid2, .cols { grid-template-columns: 1fr 1fr; }
+    header.top { flex-direction: column; align-items: flex-start; }
+    .stage { padding: 28px 20px; min-height: 380px; }
+    .stage h2 { font-size: 32px; }
+    .stage .big { font-size: 36px; }
+    form.lancar { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    body { padding-bottom: 0; }
+    .wrap { padding: 16px 14px calc(96px + env(safe-area-inset-bottom)); }
+    .logo { width: 56px; height: 56px; }
+    h1 { font-size: 18px; letter-spacing: 0.1em; }
+    .where { line-height: 1.35; }
+    nav {
+      position: static; width: 100%;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 6px; justify-content: stretch;
+      padding: 2px 0 0;
+    }
+    .mov { grid-template-columns: 1fr; }
+    .contato { grid-template-columns: 1fr; }
+    .contato .acoes { justify-content: flex-start; }
+    nav button {
+      min-height: 48px; padding: 6px 4px; font-size: 12px; line-height: 1.15;
+      border-radius: 12px; white-space: normal;
+    }
+    .kpis, .grid2, form.lancar, .cols { grid-template-columns: 1fr; }
+    .kpi strong { font-size: 24px; }
+    label.wide { grid-column: auto; }
+    input, select { font-size: 16px; min-height: 44px; border-radius: 10px; }
+    .btn, .form-actions .btn { min-height: 44px; }
+    .form-actions { flex-wrap: wrap; }
+    .form-actions .btn { flex: 1 1 100%; }
+    .timeline {
+      display: flex; overflow-x: auto; gap: 8px;
+      scroll-snap-type: x mandatory; padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tnode { flex: 0 0 148px; scroll-snap-align: start; min-height: 72px; }
+    .stage { min-height: 70vh; padding: 22px 16px 18px; }
+    .stage h2 { font-size: 28px; }
+    .stage .big { font-size: 30px; }
+    .stage .sub { font-size: 16px; }
+    .node { min-width: 0; flex: 1 1 140px; }
+    .table-scroll { overflow: visible; }
+    #tabela thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    #tabela, #tabela tbody, #tabela tr, #tabela td { display: block; width: 100%; }
+    #tabela tr {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--orange);
+      margin: 0 0 10px;
+      padding: 8px 12px;
+    }
+    #tabela td {
+      display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+      border: none; padding: 7px 0; text-align: right;
+    }
+    #tabela td::before {
+      content: attr(data-label);
+      color: var(--muted); font-size: 11px; letter-spacing: 0.05em;
+      text-transform: uppercase; font-weight: 700; text-align: left; flex: 0 0 auto;
+    }
+    #tabela td.comp { display: block; text-align: left; }
+    #tabela td.comp::before { display: block; margin-bottom: 4px; }
+    #tabela td.acao { justify-content: flex-end; }
+    #tabela td.acao::before { content: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="mark">
+      <img class="logo" src="logo.png" alt="Símbolo da Logos Church" />
+      <div>
+        <h1>LOGOS CHURCH</h1>
+        <p class="slogan">2026 · Frutificar</p>
+        <p class="where">Ser, Pertencer &amp; Influenciar · Domingo 10h · Royal Plaza Shopping, 4º andar · Londrina</p>
+      </div>
+    </div>
+    <nav>
+      <button type="button" data-view="painel" class="on">Painel</button>
+      <button type="button" data-view="slides">Slides</button>
+      <button type="button" data-view="fluxo">Cultos</button>
+      <button type="button" data-view="lancar">Lançar culto</button>
+      <button type="button" data-view="caixa">Caixa</button>
+      <button type="button" data-view="lideranca">Liderança</button>
+    </nav>
+  </header>
+
+  <section id="painel" class="view on">
+    <div class="kpis" id="kpis"></div>
+    <div class="grid2">
+      <div class="panel">
+        <h2>Pessoas por culto</h2>
+        <p class="cap">Cada barra soma as faixas do domingo. Em 11/10, crianças e adolescentes foram contados juntos: essa faixa é a exceção.</p>
+        <div id="chartPessoas"></div>
+      </div>
+      <div class="panel">
+        <h2>Ofertas por culto</h2>
+        <p class="cap">Espécie, cartão, Pix Sicoob e Pix Stone. Cartão em branco no dia 04/10 não entra na soma.</p>
+        <div id="chartOfertas"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Cultos lançados</h2>
+      <p class="cap">A tabela usa o que está salvo neste navegador. Um culto novo no formulário entra aqui e nos gráficos.</p>
+      <div class="table-scroll">
+        <table id="tabela"></table>
+      </div>
+    </div>
+  </section>
+
+  <section id="slides" class="view">
+    <div id="stage" class="stage"></div>
+    <div class="slide-nav">
+      <button type="button" class="btn" id="prev">Anterior</button>
+      <span id="slideCount"></span>
+      <button type="button" class="btn solid" id="next">Próximo</button>
+    </div>
+  </section>
+
+  <section id="fluxo" class="view">
+    <div class="panel">
+      <h2>Linha dos domingos</h2>
+      <p class="cap">Clique em um domingo para ver o culto. Lance um culto novo, ou edite e exclua o dia marcado.</p>
+      <div class="form-actions" style="margin-bottom:12px">
+        <button type="button" class="btn solid" id="fluxoNovo">Lançar culto</button>
+        <button type="button" class="btn" id="fluxoEditar">Editar</button>
+        <button type="button" class="btn ghost" id="fluxoExcluir">Excluir</button>
+      </div>
+      <div id="timeline" class="timeline"></div>
+    </div>
+    <div class="panel">
+      <h2 id="flowTitle">Culto</h2>
+      <p class="cap">Da entrada das pessoas até a oferta registrada.</p>
+      <div id="flow" class="flow"></div>
+    </div>
+  </section>
+
+  <section id="lancar" class="view">
+    <div class="panel">
+      <h2>Alimentar a semana</h2>
+      <p class="cap">Grave o culto de domingo. A mesma data substitui o lançamento anterior. Os campos numéricos vazios ficam como “não informado”.</p>
+      <form id="form" class="lancar">
+        <label>Data do culto<input type="date" name="data" required /></label>
+        <label>Adultos<input type="number" name="adultos" min="0" step="1" /></label>
+        <label>Crianças<input type="number" name="criancas" min="0" step="1" /></label>
+        <label>Adolescentes<input type="number" name="adolescentes" min="0" step="1" /></label>
+        <label>Professores (kids)<input type="number" name="professoresKids" min="0" step="1" /></label>
+        <label>Professor de adolescentes<input type="number" name="professorAdolescentes" min="0" step="1" /></label>
+        <label>Oferta em espécie (R$)<input type="number" name="especie" min="0" step="0.01" /></label>
+        <label>Oferta em cartão (R$)<input type="number" name="cartao" min="0" step="0.01" /></label>
+        <label>Pix Sicoob (R$)<input type="number" name="pixSicoob" min="0" step="0.01" /></label>
+        <label>Pix Stone (R$)<input type="number" name="pixStone" min="0" step="0.01" /></label>
+        <label class="wide">Observação<input type="text" name="obs" maxlength="180" /></label>
+        <div class="form-actions">
+          <button class="btn solid" type="submit">Salvar culto</button>
+          <button class="btn" type="button" id="exportar">Baixar JSON</button>
+          <button class="btn ghost" type="button" id="restaurar">Voltar aos dados iniciais</button>
+        </div>
+      </form>
+    </div>
+    <div class="panel">
+      <h2>Importar arquivo</h2>
+      <p class="cap">Use um JSON exportado desta plataforma para trazer os cultos a outro computador.</p>
+      <input type="file" id="importar" accept="application/json" />
+    </div>
+  </section>
+
+  <section id="caixa" class="view">
+    <div class="panel" id="caixaPorta">
+      <h2>Caixa reservado</h2>
+      <p class="cap">A senha libera a visualização de entradas e saídas neste navegador. Valor positivo fica azul. Valor negativo fica vermelho.</p>
+      <form id="caixaLogin" class="lock">
+        <label>Senha<input type="password" name="senha" autocomplete="current-password" required /></label>
+        <button class="btn solid" type="submit">Entrar</button>
+      </form>
+    </div>
+    <div id="caixaPainel" hidden>
+      <div class="kpis" id="caixaKpis"></div>
+      <div class="panel">
+        <h2>Entradas e saídas</h2>
+        <p class="cap">A entrada de cada culto é a oferta daquele domingo. As saídas são o que você lançar aqui.</p>
+        <div class="table-scroll">
+          <table id="caixaTabela"></table>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Lançar entrada ou saída</h2>
+        <p class="cap">A saída é gravada como valor negativo. Uma entrada extra soma com a oferta do culto.</p>
+        <form id="caixaForm" class="mov">
+          <label>Data<input type="date" name="data" required /></label>
+          <label>Tipo
+            <select name="tipo">
+              <option value="saida">Saída</option>
+              <option value="entrada">Entrada</option>
+            </select>
+          </label>
+          <label>Descrição<input type="text" name="descricao" maxlength="80" required /></label>
+          <label>Valor (R$)<input type="number" name="valor" min="0.01" step="0.01" required /></label>
+          <button class="btn solid" type="submit">Lançar</button>
+        </form>
+      </div>
+      <div class="panel">
+        <h2>Lançamentos manuais</h2>
+        <div class="table-scroll"><table id="caixaLista"></table></div>
+        <form id="caixaSenha" class="lock" style="margin-top:16px">
+          <label>Nova senha do caixa<input type="password" name="nova" minlength="4" autocomplete="new-password" required /></label>
+          <button class="btn" type="submit">Trocar senha</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="lideranca" class="view">
+    <div class="panel">
+      <h2>Liderança</h2>
+      <p class="cap">Toque no nome ou no telefone para abrir a conversa no WhatsApp. Incluir, editar e excluir ficam salvos neste navegador.</p>
+      <form id="liderForm" class="mov">
+        <label>Área<input name="area" maxlength="40" required /></label>
+        <label>Nome<input name="nome" maxlength="40" required /></label>
+        <label>Telefone<input name="telefone" maxlength="20" inputmode="tel" required /></label>
+        <button class="btn solid" type="submit" id="liderSalvar">Incluir contato</button>
+      </form>
+    </div>
+    <div id="liderLista" class="lider-lista"></div>
+  </section>
+</div>
+<script>
+const KEY = "logoschurch.cultos.v1";
+const MOV_KEY = "logoschurch.movimentos.v1";
+const LIDER_KEY = "logoschurch.lideranca.v1";
+const SENHA_KEY = "logoschurch.caixa.senha";
+const SENHA_INICIAL = "Frutificar";
+const EXCECAO_1110 = "Exceção: crianças e adolescentes contados juntos.";
+const SEED = [
+  { data: "2026-10-04", adultos: 74, criancas: 19, especie: 108.5, cartao: null, obs: "Cartão não informado." },
+  { data: "2026-10-11", adultos: 90, criancasAdolescentes: 41, professores: 4, especie: 852, cartao: 100, excecao: EXCECAO_1110 },
+  { data: "2026-10-18", adultos: 76, criancas: 30, adolescentes: 8, professoresKids: 3, professorAdolescentes: 1, especie: 620, cartao: 450, pixSicoob: 6290.68, pixStone: 100 },
+  { data: "2026-10-25", adultos: 79, criancas: 16, adolescentes: 6, professoresKids: 2, professorAdolescentes: 1, especie: 159, cartao: 15 },
+  { data: "2026-11-08", adultos: 80, criancas: 19, adolescentes: 8, especie: 682, cartao: 370 },
+  { data: "2026-11-15", adultos: 94, criancas: 23, professores: 2, especie: 720, cartao: 0 }
+];
+
+const numFields = ["adultos","criancas","adolescentes","professoresKids","professorAdolescentes","professores","criancasAdolescentes","especie","cartao","pixSicoob","pixStone"];
+
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) return SEED.map(x => ({...x}));
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed) || !parsed.length) return SEED.map(x => ({...x}));
+    return parsed;
+  } catch (e) {
+    return SEED.map(x => ({...x}));
+  }
+}
+let cultos = load().sort((a,b) => a.data.localeCompare(b.data));
+let adultosCorrigidos = false;
+cultos.forEach(c => {
+  if (c.data === "2026-10-11" && informado(c.criancasAdolescentes)) c.excecao = EXCECAO_1110;
+  if (c.data === "2026-11-08" && c.adultos === 8) {
+    c.adultos = 80;
+    if (typeof c.obs === "string" && c.obs.includes("Adultos informados como 8")) delete c.obs;
+    adultosCorrigidos = true;
+  }
+});
+function loadMov() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(MOV_KEY) || "[]");
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    return [];
+  }
+}
+let movimentos = loadMov();
+if (adultosCorrigidos) localStorage.setItem(KEY, JSON.stringify(cultos));
+const LIDER_SEED = [
+  { id: 1, area: "Áudio", nome: "Arthur", telefone: "43 9681-6718" },
+  { id: 2, area: "Atmosfera/Diaconia", nome: "Thamia", telefone: "43 988329024" },
+  { id: 3, area: "Kids", nome: "Mariana", telefone: "43 9141-6488" },
+  { id: 4, area: "Louvor", nome: "Anny", telefone: "43 9606-9048" },
+  { id: 5, area: "Boas-vindas", nome: "Rebecca", telefone: "43 8804-4253" },
+  { id: 6, area: "Financeiro", nome: "Maicon", telefone: "48 8828-9808" },
+  { id: 7, area: "Administrativo", nome: "Anaísa", telefone: "18 99798-2207" },
+  { id: 8, area: "Presbitério", nome: "Vanessa", telefone: "48 8814-9878" },
+  { id: 9, area: "Adolescentes/Jovens", nome: "Jeff", telefone: "43 9875-6945" },
+  { id: 10, area: "Multimídia", nome: "Júnior", telefone: "43 9169-5310" },
+  { id: 11, area: "Intercessão", nome: "Clarindo", telefone: "43 9675-8048" }
+];
+function loadLider() {
+  try {
+    const raw = localStorage.getItem(LIDER_KEY);
+    if (raw == null) return LIDER_SEED.map(x => ({...x}));
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : LIDER_SEED.map(x => ({...x}));
+  } catch (e) {
+    return LIDER_SEED.map(x => ({...x}));
+  }
+}
+let lideres = loadLider();
+let liderEdit = null;
+let caixaAberto = false;
+function senhaAtual() {
+  return localStorage.getItem(SENHA_KEY) || SENHA_INICIAL;
+}
+function persist() {
+  cultos.sort((a,b) => a.data.localeCompare(b.data));
+  localStorage.setItem(KEY, JSON.stringify(cultos));
+  localStorage.setItem(MOV_KEY, JSON.stringify(movimentos));
+  localStorage.setItem(LIDER_KEY, JSON.stringify(lideres));
+  render();
+}
+function n(v) { return typeof v === "number" && !Number.isNaN(v) ? v : 0; }
+function informado(v) { return typeof v === "number" && !Number.isNaN(v); }
+function pessoas(c) {
+  return n(c.adultos)+n(c.criancas)+n(c.adolescentes)+n(c.professoresKids)+n(c.professorAdolescentes)+n(c.professores)+n(c.criancasAdolescentes);
+}
+function oferta(c) {
+  return n(c.especie)+n(c.cartao)+n(c.pixSicoob)+n(c.pixStone);
+}
+function brl(v) {
+  return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+function dataBR(iso) {
+  const [y,m,d] = iso.split("-");
+  return d + "/" + m + "/" + y;
+}
+function dataCurta(iso) {
+  const [y,m,d] = iso.split("-");
+  return d + "/" + m;
+}
+
+function render() {
+  const totP = cultos.reduce((s,c) => s + pessoas(c), 0);
+  const totO = cultos.reduce((s,c) => s + oferta(c), 0);
+  const pico = cultos.reduce((a,c) => pessoas(c) > pessoas(a) ? c : a, cultos[0]);
+  const mediaP = cultos.length ? Math.round(totP / cultos.length) : 0;
+  const mediaE = cultos.length ? totO / cultos.length : 0;
+  document.getElementById("kpis").innerHTML = [
+    ["Média de pessoas por culto", mediaP.toLocaleString("pt-BR"), totP.toLocaleString("pt-BR") + " presenças somadas"],
+    ["Média de entradas por culto", brl(mediaE), brl(totO) + " em ofertas"],
+    ["Cultos no período", String(cultos.length), "04/10 a 15/11/2026, mais o que você lançar"],
+    ["Maior culto", pessoas(pico) + " pessoas", dataBR(pico.data)]
+  ].map(([k,v,e]) => `<article class="kpi"><span>${k}</span><strong>${v}</strong><em>${e}</em></article>`).join("");
+
+  document.getElementById("chartPessoas").innerHTML = barra(cultos.map(c => ({
+    nome: dataCurta(c.data),
+    partes: [
+      ["Adultos", n(c.adultos), "#163557"],
+      ["Crianças", n(c.criancas), "#f15a24"],
+      ["Adolescentes", n(c.adolescentes), "#3d6294"],
+      ["Crianças e adolescentes (exceção)", n(c.criancasAdolescentes), "#ee8d33"],
+      ["Professores", n(c.professoresKids)+n(c.professorAdolescentes)+n(c.professores), "#b4c0e0"]
+    ]
+  })), "pessoas");
+
+  document.getElementById("chartOfertas").innerHTML = barra(cultos.map(c => ({
+    nome: dataCurta(c.data),
+    partes: [
+      ["Espécie", n(c.especie), "#163557"],
+      ["Cartão", n(c.cartao), "#f15a24"],
+      ["Pix Sicoob", n(c.pixSicoob), "#3d6294"],
+      ["Pix Stone", n(c.pixStone), "#ee8d33"]
+    ]
+  })), "reais");
+
+  const head = `<tr>
+    <th>Data</th><th class="num">Pessoas</th><th>Composição</th>
+    <th class="num">Espécie</th><th class="num">Cartão</th><th class="num">Pix</th><th class="num">Total</th><th></th>
+  </tr>`;
+  const rows = cultos.map(c => {
+    const pix = n(c.pixSicoob)+n(c.pixStone);
+    const comp = [
+      informado(c.adultos) ? c.adultos + " adultos" : "",
+      informado(c.criancas) ? c.criancas + " crianças" : "",
+      informado(c.adolescentes) ? c.adolescentes + " adolescentes" : "",
+      informado(c.criancasAdolescentes) ? c.criancasAdolescentes + " crianças e adolescentes juntos" : "",
+      (n(c.professoresKids)+n(c.professorAdolescentes)+n(c.professores))
+        ? (n(c.professoresKids)+n(c.professorAdolescentes)+n(c.professores)) + " professores" : ""
+    ].filter(Boolean).join(" · ");
+    const aviso = (c.obs ? `<div class="flag">${c.obs}</div>` : "") + (c.excecao ? `<div class="excecao">${c.excecao}</div>` : "");
+    return `<tr>
+      <td data-label="Data">${dataBR(c.data)}</td>
+      <td class="num" data-label="Pessoas">${pessoas(c)}</td>
+      <td class="comp" data-label="Composição">${comp}${aviso}</td>
+      <td class="num" data-label="Espécie">${informado(c.especie) ? brl(c.especie) : "—"}</td>
+      <td class="num" data-label="Cartão">${informado(c.cartao) ? brl(c.cartao) : "—"}</td>
+      <td class="num" data-label="Pix">${pix ? brl(pix) : "—"}</td>
+      <td class="num" data-label="Total">${brl(oferta(c))}</td>
+      <td class="acao" data-label=""><button type="button" class="btn ghost" data-del="${c.data}">Excluir</button></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("tabela").innerHTML = head + rows;
+
+  renderSlides();
+  renderFluxo();
+  renderCaixa();
+  renderLideranca();
+}
+
+function barra(series, unidade) {
+  const w = 640, h = 280, padL = 44, padB = 28, padT = 12, padR = 8;
+  const max = Math.max(1, ...series.map(s => s.partes.reduce((a,p) => a + p[1], 0)));
+  const iw = w - padL - padR, ih = h - padT - padB;
+  const bw = iw / series.length * 0.62;
+  const gap = iw / series.length;
+  let bars = "";
+  let labels = "";
+  series.forEach((s, i) => {
+    const x = padL + i * gap + (gap - bw) / 2;
+    let y = padT + ih;
+    const total = s.partes.reduce((a,p) => a + p[1], 0);
+    s.partes.forEach(([nome, val, cor]) => {
+      if (!val) return;
+      const bh = (val / max) * ih;
+      y -= bh;
+      bars += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}" fill="${cor}"><title>${s.nome} · ${nome}: ${unidade === "reais" ? brl(val) : val}</title></rect>`;
+    });
+    labels += `<text x="${(x + bw/2).toFixed(1)}" y="${h - 8}" text-anchor="middle" font-size="11" fill="#6a645c">${s.nome}</text>`;
+    const topo = padT + ih - (total / max) * ih - 4;
+    const rotulo = unidade === "reais" ? (total >= 1000 ? (total/1000).toFixed(1).replace(".", ",") + " mil" : total.toFixed(0)) : String(total);
+    labels += `<text x="${(x + bw/2).toFixed(1)}" y="${Math.max(12, topo).toFixed(1)}" text-anchor="middle" font-size="11" fill="#122641">${rotulo}</text>`;
+  });
+  const ticks = [0, 0.5, 1].map(t => {
+    const val = max * t;
+    const y = padT + ih - t * ih;
+    const txt = unidade === "reais" ? (val >= 1000 ? (val/1000).toFixed(1).replace(".", ",") + " mil" : val.toFixed(0)) : String(Math.round(val));
+    return `<line x1="${padL}" y1="${y}" x2="${w-padR}" y2="${y}" stroke="#e4ddd0" />
+      <text x="${padL-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#6a645c">${txt}</text>`;
+  }).join("");
+  const usados = new Map();
+  series.forEach(s => s.partes.forEach(([nome, val, cor]) => { if (val) usados.set(nome, cor); }));
+  const legenda = [...usados.entries()].map(([nome, cor]) => `<span><i class="sw" style="background:${cor}"></i>${nome}</span>`).join("");
+  const eixo = unidade === "reais" ? "Valor (R$)" : "Pessoas";
+  return `<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${eixo} por culto">
+    ${ticks}${bars}${labels}
+    <text x="12" y="14" font-size="10" fill="#6a645c" transform="rotate(-90 12 80)">${eixo}</text>
+  </svg><div class="legend">${legenda}</div>`;
+}
+
+let slide = 0;
+function slidesData() {
+  const capa = {
+    eyebrow: "LOGOS CHURCH · LONDRINA",
+    titulo: "Ser, Pertencer & Influenciar",
+    linha: "Cultos de domingo · " + dataBR(cultos[0].data) + " a " + dataBR(cultos[cultos.length-1].data),
+    extra: "10h · Royal Plaza Shopping, 4º andar"
+  };
+  const totP = cultos.reduce((s,c) => s + pessoas(c), 0);
+  const totO = cultos.reduce((s,c) => s + oferta(c), 0);
+  const resumo = {
+    eyebrow: "PERÍODO",
+    titulo: cultos.length + " cultos",
+    linha: totP.toLocaleString("pt-BR") + " presenças somadas",
+    extra: "média de " + Math.round(totP / cultos.length).toLocaleString("pt-BR") + " pessoas e " + brl(totO / cultos.length) + " de entradas por culto"
+  };
+  const dias = cultos.map(c => ({
+    eyebrow: "CULTO · " + dataBR(c.data),
+    titulo: pessoas(c) + " pessoas",
+    linha: brl(oferta(c)),
+    extra: [
+      informado(c.adultos) ? c.adultos + " adultos" : "",
+      informado(c.criancas) ? c.criancas + " crianças" : "",
+      informado(c.adolescentes) ? c.adolescentes + " adolescentes" : "",
+      informado(c.criancasAdolescentes) ? c.criancasAdolescentes + " crianças e adolescentes juntos" : "",
+      (n(c.professores)+n(c.professoresKids)+n(c.professorAdolescentes))
+        ? (n(c.professores)+n(c.professoresKids)+n(c.professorAdolescentes)) + " professores" : ""
+    ].filter(Boolean).join(" · ") + (c.excecao ? " · " + c.excecao : "") + (c.obs ? " · " + c.obs : "")
+  }));
+  return [capa, resumo, ...dias];
+}
+function renderSlides() {
+  const all = slidesData();
+  if (slide >= all.length) slide = 0;
+  const s = all[slide];
+  document.getElementById("stage").innerHTML = `
+    <div>
+      <div class="brand"><img src="logo.png" alt="" /><span>LOGOS CHURCH</span></div>
+      <div class="eyebrow">${s.eyebrow}</div>
+      <h2>${s.titulo}</h2>
+      <div class="big">${s.linha}</div>
+    </div>
+    <div class="sub">${s.extra}</div>`;
+  document.getElementById("slideCount").textContent = (slide + 1) + " / " + all.length;
+}
+
+let fluxoData = cultos[cultos.length - 1].data;
+let editandoData = null;
+function renderFluxo() {
+  const box = document.getElementById("timeline");
+  box.innerHTML = cultos.map(c => `
+    <button type="button" class="tnode ${c.data === fluxoData ? "on" : ""}" data-flow="${c.data}">
+      <small>${dataBR(c.data)}</small>
+      <strong>${pessoas(c)}</strong>
+      <small>${brl(oferta(c))}</small>
+    </button>`).join("");
+  const c = cultos.find(x => x.data === fluxoData) || cultos[cultos.length - 1];
+  fluxoData = c.data;
+  document.getElementById("flowTitle").textContent = "Culto de " + dataBR(c.data);
+  const faixas = [
+    ["Adultos", c.adultos],
+    ["Crianças", c.criancas],
+    ["Adolescentes", c.adolescentes],
+    ["Crianças e adolescentes juntos (exceção)", c.criancasAdolescentes],
+    ["Professores kids", c.professoresKids],
+    ["Professor adolescentes", c.professorAdolescentes],
+    ["Professores", c.professores]
+  ].filter(([,v]) => informado(v));
+  const ofertas = [
+    ["Espécie", c.especie],
+    ["Cartão", c.cartao],
+    ["Pix Sicoob", c.pixSicoob],
+    ["Pix Stone", c.pixStone]
+  ].filter(([,v]) => informado(v) && v !== 0 || (informado(v) && v === 0));
+  const ofertasVisiveis = [
+    ["Espécie", c.especie],
+    ["Cartão", c.cartao],
+    ["Pix Sicoob", c.pixSicoob],
+    ["Pix Stone", c.pixStone]
+  ].filter(([,v]) => informado(v));
+  document.getElementById("flow").innerHTML = `
+    <div class="flow-row">
+      <div class="node"><b>Culto</b><strong>${dataCurta(c.data)}</strong></div>
+      <div class="arrow">→</div>
+      <div class="node"><b>Pessoas</b><strong>${pessoas(c)}</strong></div>
+    </div>
+    <div class="flow-row">
+      ${faixas.map(([k,v]) => `<div class="node"><b>${k}</b><strong>${v}</strong></div>`).join('<div class="arrow">·</div>')}
+    </div>
+    <div class="flow-row"><div class="arrow">↓</div></div>
+    <div class="flow-row">
+      ${ofertasVisiveis.map(([k,v]) => `<div class="node"><b>${k}</b><strong>${brl(v)}</strong></div>`).join('<div class="arrow">+</div>')}
+      <div class="arrow">=</div>
+      <div class="node"><b>Total da oferta</b><strong>${brl(oferta(c))}</strong></div>
+    </div>`;
+}
+
+function sinal(v) {
+  const cls = v < 0 ? "neg" : "pos";
+  const texto = v < 0 ? "− " + brl(Math.abs(v)) : brl(v);
+  return `<span class="${cls}">${texto}</span>`;
+}
+function entradaDia(iso) {
+  const c = cultos.find(x => x.data === iso);
+  const extra = movimentos.filter(m => m.data === iso && m.valor > 0).reduce((s, m) => s + m.valor, 0);
+  return (c ? oferta(c) : 0) + extra;
+}
+function saidaDia(iso) {
+  return movimentos.filter(m => m.data === iso && m.valor < 0).reduce((s, m) => s + m.valor, 0);
+}
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+}
+function waLink(telefone) {
+  let d = String(telefone).replace(/\D/g, "");
+  if (d.startsWith("55") && d.length >= 12) d = d.slice(2);
+  if (d.length === 10) d = d.slice(0, 2) + "9" + d.slice(2);
+  return "https://wa.me/55" + d;
+}
+function renderLideranca() {
+  const lista = document.getElementById("liderLista");
+  lista.innerHTML = lideres.map(p => `
+    <article class="contato">
+      <a href="${waLink(p.telefone)}" target="_blank" rel="noopener">
+        <b>${esc(p.area)}</b>
+        <strong>${esc(p.nome)}</strong>
+        <span>${esc(p.telefone)}</span>
+      </a>
+      <div class="acoes">
+        <button type="button" class="btn" data-ledit="${p.id}">Editar</button>
+        <button type="button" class="btn ghost" data-ldel="${p.id}">Excluir</button>
+      </div>
+    </article>`).join("") || `<div class="panel"><p class="cap">Nenhum contato. Use Incluir contato para adicionar.</p></div>`;
+  document.getElementById("liderSalvar").textContent = liderEdit ? "Salvar edição" : "Incluir contato";
+}
+function renderCaixa() {
+  document.getElementById("caixaPorta").hidden = caixaAberto;
+  document.getElementById("caixaPainel").hidden = !caixaAberto;
+  if (!caixaAberto) return;
+  const datas = [...new Set([...cultos.map(c => c.data), ...movimentos.map(m => m.data)])].sort();
+  let ent = 0, sai = 0;
+  datas.forEach(d => { ent += entradaDia(d); sai += saidaDia(d); });
+  const saldo = ent + sai;
+  document.getElementById("caixaKpis").innerHTML = [
+    ["Entradas", sinal(ent), "ofertas e lançamentos positivos"],
+    ["Saídas", sinal(sai), "lançamentos negativos"],
+    ["Saldo", sinal(saldo), saldo < 0 ? "resultado negativo" : "resultado positivo"]
+  ].map(([k,v,e]) => `<article class="kpi"><span>${k}</span><strong>${v}</strong><em>${e}</em></article>`).join("");
+  const head = `<tr><th>Data</th><th class="num">Entrada</th><th class="num">Saída</th><th class="num">Saldo</th></tr>`;
+  document.getElementById("caixaTabela").innerHTML = head + datas.map(d => {
+    const e = entradaDia(d);
+    const s = saidaDia(d);
+    return `<tr>
+      <td>${dataBR(d)}</td>
+      <td class="num">${sinal(e)}</td>
+      <td class="num">${s ? sinal(s) : "—"}</td>
+      <td class="num">${sinal(e + s)}</td>
+    </tr>`;
+  }).join("");
+  const lista = [...movimentos].sort((a,b) => a.data.localeCompare(b.data) || a.id - b.id);
+  document.getElementById("caixaLista").innerHTML = `<tr><th>Data</th><th>Descrição</th><th class="num">Valor</th><th></th></tr>` +
+    (lista.length ? lista.map(m => `<tr>
+      <td>${dataBR(m.data)}</td>
+      <td>${m.descricao}</td>
+      <td class="num">${sinal(m.valor)}</td>
+      <td><button type="button" class="btn ghost" data-mov="${m.id}">Excluir</button></td>
+    </tr>`).join("") : `<tr><td colspan="4">Nenhuma saída ou entrada extra lançada.</td></tr>`);
+}
+
+document.querySelectorAll("nav button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("nav button").forEach(b => b.classList.remove("on"));
+    document.querySelectorAll(".view").forEach(v => v.classList.remove("on"));
+    btn.classList.add("on");
+    document.getElementById(btn.dataset.view).classList.add("on");
+  });
+});
+document.getElementById("prev").addEventListener("click", () => {
+  const nSlides = slidesData().length;
+  slide = (slide - 1 + nSlides) % nSlides;
+  renderSlides();
+});
+document.getElementById("next").addEventListener("click", () => {
+  slide = (slide + 1) % slidesData().length;
+  renderSlides();
+});
+document.addEventListener("keydown", (e) => {
+  if (!document.getElementById("slides").classList.contains("on")) return;
+  if (e.key === "ArrowRight") document.getElementById("next").click();
+  if (e.key === "ArrowLeft") document.getElementById("prev").click();
+});
+document.getElementById("tabela").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-del]");
+  if (!b) return;
+  cultos = cultos.filter(c => c.data !== b.dataset.del);
+  if (!cultos.length) cultos = SEED.map(x => ({...x}));
+  if (!cultos.some(c => c.data === fluxoData)) fluxoData = cultos[cultos.length - 1].data;
+  persist();
+});
+document.getElementById("timeline").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-flow]");
+  if (!b) return;
+  fluxoData = b.dataset.flow;
+  renderFluxo();
+});
+function irParaLancamento(editando) {
+  if (!editando) {
+    editandoData = null;
+    document.getElementById("form").reset();
+    document.querySelector("#lancar h2").textContent = "Alimentar a semana";
+  }
+  document.querySelector('nav button[data-view="lancar"]').click();
+}
+function preencherCulto(c) {
+  const f = document.getElementById("form");
+  f.reset();
+  f.data.value = c.data;
+  numFields.forEach(name => {
+    const el = f.elements[name];
+    if (el) el.value = informado(c[name]) ? c[name] : "";
+  });
+  f.obs.value = c.obs || "";
+  editandoData = c.data;
+  document.querySelector("#lancar h2").textContent = "Editar culto de " + dataBR(c.data);
+  irParaLancamento(true);
+}
+document.getElementById("fluxoNovo").addEventListener("click", () => irParaLancamento(false));
+document.getElementById("fluxoEditar").addEventListener("click", () => {
+  const c = cultos.find(x => x.data === fluxoData);
+  if (c) preencherCulto(c);
+});
+document.getElementById("fluxoExcluir").addEventListener("click", () => {
+  cultos = cultos.filter(c => c.data !== fluxoData);
+  if (!cultos.length) cultos = SEED.map(x => ({...x}));
+  if (!cultos.some(c => c.data === fluxoData)) fluxoData = cultos[cultos.length - 1].data;
+  if (editandoData && !cultos.some(c => c.data === editandoData)) editandoData = null;
+  persist();
+});
+document.getElementById("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const item = { data: fd.get("data"), obs: (fd.get("obs") || "").trim() };
+  if (!item.obs) delete item.obs;
+  numFields.forEach(name => {
+    const raw = String(fd.get(name) || "").trim();
+    if (raw === "") return;
+    item[name] = Number(raw);
+  });
+  if (informado(item.criancasAdolescentes)) item.excecao = EXCECAO_1110;
+  const anterior = cultos.find(c => c.data === (editandoData || item.data));
+  if (editandoData && editandoData !== item.data) cultos = cultos.filter(c => c.data !== editandoData);
+  if (anterior) {
+    ["professores", "criancasAdolescentes", "excecao"].forEach(k => {
+      if (item[k] == null && anterior[k] != null) item[k] = anterior[k];
+    });
+  }
+  const i = cultos.findIndex(c => c.data === item.data);
+  if (i >= 0) cultos[i] = item; else cultos.push(item);
+  editandoData = null;
+  document.querySelector("#lancar h2").textContent = "Alimentar a semana";
+  fluxoData = item.data;
+  e.target.reset();
+  persist();
+  document.querySelector('nav button[data-view="painel"]').click();
+});
+document.getElementById("caixaLogin").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (new FormData(e.target).get("senha") !== senhaAtual()) {
+    alert("Senha incorreta.");
+    return;
+  }
+  caixaAberto = true;
+  e.target.reset();
+  renderCaixa();
+});
+document.getElementById("caixaForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const bruto = Number(fd.get("valor"));
+  movimentos.push({
+    id: Date.now(),
+    data: fd.get("data"),
+    descricao: String(fd.get("descricao") || "").trim(),
+    valor: fd.get("tipo") === "saida" ? -Math.abs(bruto) : Math.abs(bruto)
+  });
+  e.target.reset();
+  persist();
+});
+document.getElementById("caixaLista").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-mov]");
+  if (!b) return;
+  movimentos = movimentos.filter(m => String(m.id) !== b.dataset.mov);
+  persist();
+});
+document.getElementById("caixaSenha").addEventListener("submit", (e) => {
+  e.preventDefault();
+  localStorage.setItem(SENHA_KEY, new FormData(e.target).get("nova"));
+  e.target.reset();
+  alert("Senha do caixa atualizada neste navegador.");
+});
+document.getElementById("liderForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const item = {
+    id: liderEdit || Date.now(),
+    area: String(fd.get("area") || "").trim(),
+    nome: String(fd.get("nome") || "").trim(),
+    telefone: String(fd.get("telefone") || "").trim()
+  };
+  if (liderEdit) {
+    lideres = lideres.map(p => p.id === liderEdit ? item : p);
+    liderEdit = null;
+  } else lideres.push(item);
+  e.target.reset();
+  persist();
+});
+document.getElementById("liderLista").addEventListener("click", (e) => {
+  const ed = e.target.closest("[data-ledit]");
+  const del = e.target.closest("[data-ldel]");
+  if (ed) {
+    const p = lideres.find(x => String(x.id) === ed.dataset.ledit);
+    if (!p) return;
+    const f = document.getElementById("liderForm");
+    f.area.value = p.area;
+    f.nome.value = p.nome;
+    f.telefone.value = p.telefone;
+    liderEdit = p.id;
+    document.getElementById("liderSalvar").textContent = "Salvar edição";
+    f.scrollIntoView({ block: "center" });
+  }
+  if (del) {
+    lideres = lideres.filter(p => String(p.id) !== del.dataset.ldel);
+    if (String(liderEdit) === del.dataset.ldel) liderEdit = null;
+    persist();
+  }
+});
+document.getElementById("exportar").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify({ cultos, movimentos, lideres }, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "logos-church-cultos.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+document.getElementById("restaurar").addEventListener("click", () => {
+  cultos = SEED.map(x => ({...x}));
+  fluxoData = cultos[cultos.length - 1].data;
+  persist();
+});
+document.getElementById("importar").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const parsed = JSON.parse(await file.text());
+    const lista = Array.isArray(parsed) ? parsed : parsed.cultos;
+    if (!Array.isArray(lista) || !lista.every(x => x && x.data)) throw new Error("formato");
+    cultos = lista;
+    if (parsed && Array.isArray(parsed.movimentos)) movimentos = parsed.movimentos;
+    if (parsed && Array.isArray(parsed.lideres)) lideres = parsed.lideres;
+    fluxoData = cultos[cultos.length - 1].data;
+    persist();
+  } catch (err) {
+    alert("O arquivo precisa ser um JSON exportado desta plataforma.");
+  }
+  e.target.value = "";
+});
+
+render();
+</script>
+</body>
+</html>
